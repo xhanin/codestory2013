@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Step1Test {
+public class Step1HandlerTest {
 
     @Test
     public void should_server_respond_email_when_question_asked() throws IOException {
