@@ -20,6 +20,7 @@ public class CodeStory2013 {
                 add(new DateHeaderHandler());
             }
         }
+                .add(new Step1MoreHandler())
                 .add(new Step1Handler());
     }
 
