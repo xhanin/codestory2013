@@ -1,6 +1,6 @@
 package cs13;
 
-import org.junit.Rule;
+import org.junit.ClassRule;
 import org.junit.Test;
 import us.monoid.web.Resty;
 import us.monoid.web.TextResource;
@@ -11,8 +11,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Step1MoreHandlerTest {
-    @Rule
-    public ServerRule server = new ServerRule();
+    @ClassRule
+    public static ServerRule server = new ServerRule();
 
     @Test
     public void should_give_hint_that_there_is_more() throws IOException {
