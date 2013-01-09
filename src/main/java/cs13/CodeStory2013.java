@@ -26,8 +26,7 @@ public class CodeStory2013 {
                 add(new LoggingHandler());
             }
         }
-                .add(new Step1MoreHandler())
-                .add(new Step1Handler());
+                .add(new BasicQuestionHandler());
     }
 
     public void start() throws ExecutionException, InterruptedException {
