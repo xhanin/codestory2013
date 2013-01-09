@@ -18,8 +18,8 @@ public class MarkdownQuestionHandler implements HttpHandler {
 
         String q = request.body();
 
-        logger.info("{} : {}", 202, q);
-        response.status(202).content("OUI").end();
+        logger.info("{} : {}", 201, q);
+        response.status(201).content("OK").end();
     }
 
 }
