@@ -1,5 +1,7 @@
 package cs13;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.webbitserver.HttpControl;
 import org.webbitserver.HttpHandler;
 import org.webbitserver.HttpRequest;
@@ -14,28 +16,40 @@ public class BasicQuestionHandler implements HttpHandler {
         public static final String BAD_PATH = "Je croyais qu'on devait repondre sur / seulement, bon aller pour cette fois je vous donne quand meme mon email";
     }
 
+    private final Logger logger = LoggerFactory.getLogger("QUESTION");
+
     public void handleHttpRequest(HttpRequest request, HttpResponse response, HttpControl httpControl) throws Exception {
-        String q = request.queryParam("q");
 
         if (!"/".equals(URI.create(request.uri()).getPath())) {
-            response.status(404).content(ErrorMessages.BAD_PATH).end();
+            respondError(response, 404, ErrorMessages.BAD_PATH);
             return;
         }
 
+        String q = request.queryParam("q");
         if (q == null) {
-            response.status(400).content(ErrorMessages.NO_QUESTION).end();
+            respondError(response, 400, ErrorMessages.NO_QUESTION);
             return;
         }
 
         if ("Quelle est ton adresse email".equalsIgnoreCase(q)) {
-            response.content("xavier.hanin@gmail.com").end();
+            respond(response, q, "xavier.hanin@gmail.com");
         } else if ("Es tu abonne a la mailing list(OUI/NON)".equalsIgnoreCase(q)) {
-            response.content("OUI").end();
+            respond(response, q, "OUI");
         } else if ("Es tu heureux de participer(OUI/NON)".equalsIgnoreCase(q)) {
-            response.content("OUI").end();
+            respond(response, q, "OUI");
         } else {
-            response.status(412).content(ErrorMessages.BAD_QUESTION).end();
+            respondError(response, 412, ErrorMessages.BAD_QUESTION);
         }
 
+    }
+
+    private HttpResponse respondError(HttpResponse response, int status, String r) {
+        logger.info("{} : {}", status, r);
+        return response.status(status).content(r).end();
+    }
+
+    private HttpResponse respond(HttpResponse response, String q, String r) {
+        logger.info("{} => {}", q, r);
+        return response.content(r).end();
     }
 }
