@@ -31,6 +31,9 @@
         <module name="codestory2013" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="codestory2013" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
