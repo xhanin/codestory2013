@@ -18,8 +18,8 @@ public class MarkdownQuestionHandler implements HttpHandler {
 
         String q = request.body();
 
-        logger.info("{} : {}", 412, q);
-        response.status(412).content("je ne sais pas encore y repondre, mais j'y travaille...").end();
+        logger.info("{} : {}", 200, q);
+        response.content("ok j'y travaille...").end();
     }
 
 }
