@@ -38,6 +38,17 @@ public class BasicQuestionHandlerTest {
                 is("OUI"));
     }
 
+    @Test
+    public void should_server_respond_yes_when_happy_to_participate_asked() throws IOException {
+        TextResource resource = new Resty().text(
+                server.uriBuilder()
+                        .addParameter("q", "Es tu heureux de participer(OUI/NON)")
+                        .toUri());
+        assertThat(
+                resource.toString(),
+                is("OUI"));
+    }
+
 
     @Test(expected = IOException.class)
     public void should_server_respond_400_when_no_question_asked() throws IOException {

@@ -31,6 +31,8 @@ public class BasicQuestionHandler implements HttpHandler {
             response.content("xavier.hanin@gmail.com").end();
         } else if ("Es tu abonne a la mailing list(OUI/NON)".equalsIgnoreCase(q)) {
             response.content("OUI").end();
+        } else if ("Es tu heureux de participer(OUI/NON)".equalsIgnoreCase(q)) {
+            response.content("OUI").end();
         } else {
             response.status(412).content(ErrorMessages.BAD_QUESTION).end();
         }
