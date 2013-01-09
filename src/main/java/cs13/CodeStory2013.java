@@ -26,6 +26,7 @@ public class CodeStory2013 {
                 add(new LoggingHandler());
             }
         }
+                .add(new MarkdownQuestionHandler())
                 .add(new BasicQuestionHandler());
     }
 

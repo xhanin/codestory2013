@@ -49,6 +49,17 @@ public class BasicQuestionHandlerTest {
                 is("OUI"));
     }
 
+    @Test
+    public void should_server_respond_yes_when_ready_for_markdown_asked() throws IOException {
+        TextResource resource = new Resty().text(
+                server.uriBuilder()
+                        .addParameter("q", "Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)")
+                        .toUri());
+        assertThat(
+                resource.toString(),
+                is("OUI"));
+    }
+
 
     @Test(expected = IOException.class)
     public void should_server_respond_400_when_no_question_asked() throws IOException {
