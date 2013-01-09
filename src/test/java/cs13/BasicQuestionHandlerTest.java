@@ -61,6 +61,17 @@ public class BasicQuestionHandlerTest {
     }
 
 
+    @Test
+    public void should_server_respond_no_to_always_respond_yes_question() throws IOException {
+        TextResource resource = new Resty().text(
+                server.uriBuilder()
+                        .addParameter("q", "Est ce que tu reponds toujours oui(OUI/NON)")
+                        .toUri());
+        assertThat(
+                resource.toString(),
+                is("NON"));
+    }
+
     @Test(expected = IOException.class)
     public void should_server_respond_400_when_no_question_asked() throws IOException {
         TextResource resource = new Resty().text(

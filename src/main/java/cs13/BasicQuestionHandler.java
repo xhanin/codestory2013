@@ -39,6 +39,8 @@ public class BasicQuestionHandler implements HttpHandler {
             respond(response, q, "OUI");
         } else if ("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)".equalsIgnoreCase(q)) {
             respond(response, q, "OUI");
+        } else if ("Est ce que tu reponds toujours oui(OUI/NON)".equalsIgnoreCase(q)) {
+            respond(response, q, "NON");
         } else {
             respondError(response, 412, ErrorMessages.BAD_QUESTION);
         }
