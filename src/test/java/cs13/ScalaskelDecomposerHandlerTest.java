@@ -67,7 +67,7 @@ public class ScalaskelDecomposerHandlerTest {
         // resty json support is not able to return json array directly, only json object :(
         String s = new Resty().text(
                 server.uriBuilder()
-                        .withPath("/skalaskel/change/" + groDecimaux)
+                        .withPath("/scalaskel/change/" + groDecimaux)
                         .toUri()).toString();
         JsonNode json = new ObjectMapper().readTree(s);
 
