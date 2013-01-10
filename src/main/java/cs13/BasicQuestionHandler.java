@@ -41,6 +41,8 @@ public class BasicQuestionHandler implements HttpHandler {
             respond(response, q, "OUI");
         } else if ("Est ce que tu reponds toujours oui(OUI/NON)".equalsIgnoreCase(q)) {
             respond(response, q, "NON");
+        } else if ("As tu bien recu le premier enonce(OUI/NON)".equalsIgnoreCase(q)) {
+            respond(response, q, "OUI");
         } else {
             respondError(response, 412, ErrorMessages.BAD_QUESTION);
         }

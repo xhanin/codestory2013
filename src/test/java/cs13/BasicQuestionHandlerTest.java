@@ -60,6 +60,17 @@ public class BasicQuestionHandlerTest {
                 is("OUI"));
     }
 
+    @Test
+    public void should_server_respond_yes_when_received_first_problem_asked() throws IOException {
+        TextResource resource = new Resty().text(
+                server.uriBuilder()
+                        .addParameter("q", "As tu bien recu le premier enonce(OUI/NON)")
+                        .toUri());
+        assertThat(
+                resource.toString(),
+                is("OUI"));
+    }
+
 
     @Test
     public void should_server_respond_no_to_always_respond_yes_question() throws IOException {
