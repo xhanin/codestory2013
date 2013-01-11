@@ -38,9 +38,9 @@ public class BasicQuestionHandler implements HttpHandler {
         String r = BASIC_QUESTIONS.get(q);
         if (r == null) {
             // let's see if it's an expression
-            // but first it seems it was not url encoded, so + get converted to spaces, encode it again
-            // to get it "as provided" in the URL
-            q = q.replace(' ', '+');
+            // but first it seems it was not url encoded, so + get converted to spaces.
+            // And we want point as decimal separator...
+            q = q.replace(' ', '+').replace(',', '.');
             try {
                 double v = new ExpressionBuilder(q, true).build().calculate();
                 r = String.valueOf(new Double(Math.floor(v)).intValue());
