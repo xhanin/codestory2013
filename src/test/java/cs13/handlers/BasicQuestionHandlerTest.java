@@ -23,7 +23,7 @@ public class BasicQuestionHandlerTest {
         askBasicQuestionAndExpectAnswer("Est ce que tu reponds toujours oui(OUI/NON)", "NON");
         askBasicQuestionAndExpectAnswer("1 1", "2");
         askBasicQuestionAndExpectAnswer("2 2", "4");
-        askBasicQuestionAndExpectAnswer("(1 2)/2", "1,5");
+        askBasicQuestionAndExpectAnswer("(1 2)/2", "1");
     }
 
     @Test

@@ -9,8 +9,6 @@ import org.webbitserver.HttpHandler;
 import org.webbitserver.HttpRequest;
 import org.webbitserver.HttpResponse;
 
-import java.text.DecimalFormat;
-import java.util.Locale;
 import java.util.Map;
 
 public class BasicQuestionHandler implements HttpHandler {
@@ -45,8 +43,7 @@ public class BasicQuestionHandler implements HttpHandler {
             q = q.replace(' ', '+');
             try {
                 double v = new ExpressionBuilder(q).build().calculate();
-                r = isInt(v) ? String.valueOf(new Double(v).intValue())
-                        : DecimalFormat.getInstance(Locale.FRENCH).format(v);
+                r = String.valueOf(new Double(Math.floor(v)).intValue());
             } catch (Exception e) {
                 respondError(response, 412, ErrorMessages.BAD_QUESTION);
                 return;
@@ -54,10 +51,6 @@ public class BasicQuestionHandler implements HttpHandler {
         }
         logger.info("{} => {}", q, r);
         response.content(r).end();
-    }
-
-    private boolean isInt(double v) {
-        return (v == Math.floor(v)) && !Double.isInfinite(v);
     }
 
     private HttpResponse respondError(HttpResponse response, int status, String r) {
