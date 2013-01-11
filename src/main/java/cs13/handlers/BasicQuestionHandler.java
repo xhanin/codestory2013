@@ -25,6 +25,7 @@ public class BasicQuestionHandler implements HttpHandler {
             .put("Est ce que tu reponds toujours oui(OUI/NON)", "NON")
             .put("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)", "OUI")
             .put("As tu bien recu le premier enonce(OUI/NON)", "OUI")
+            .put("1 1", "2")
             .build();
 
     public void handleHttpRequest(HttpRequest request, HttpResponse response, HttpControl httpControl) throws Exception {
