@@ -9,6 +9,8 @@ import org.webbitserver.HttpHandler;
 import org.webbitserver.HttpRequest;
 import org.webbitserver.HttpResponse;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
 import java.util.Map;
 
 public class BasicQuestionHandler implements HttpHandler {
@@ -38,11 +40,13 @@ public class BasicQuestionHandler implements HttpHandler {
         String r = BASIC_QUESTIONS.get(q);
         if (r == null) {
             // let's see if it's an expression
-            // but first + are not encoded ;-/
+            // but first it seems it was not url encoded, so + get converted to spaces, encode it again
+            // to get it "as provided" in the URL
             q = q.replace(' ', '+');
             try {
                 double v = new ExpressionBuilder(q).build().calculate();
-                r = isInt(v) ? String.valueOf(new Double(v).intValue()) : String.valueOf(v);
+                r = isInt(v) ? String.valueOf(new Double(v).intValue())
+                        : DecimalFormat.getInstance(Locale.FRENCH).format(v);
             } catch (Exception e) {
                 respondError(response, 412, ErrorMessages.BAD_QUESTION);
                 return;
