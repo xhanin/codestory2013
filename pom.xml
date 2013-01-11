@@ -34,9 +34,9 @@
             <version>1.9.11</version>
         </dependency>
         <dependency>
-            <groupId>de.congrace</groupId>
-            <artifactId>exp4j</artifactId>
-            <version>0.3.9-SNAPSHOT</version>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.6.1</version>
         </dependency>
 
         <dependency>

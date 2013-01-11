@@ -1,7 +1,7 @@
 package cs13.handlers;
 
 import com.google.common.collect.ImmutableMap;
-import de.congrace.exp4j.ExpressionBuilder;
+import org.codehaus.janino.ExpressionEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webbitserver.HttpControl;
@@ -42,8 +42,12 @@ public class BasicQuestionHandler implements HttpHandler {
             // And we want point as decimal separator...
             q = q.replace(' ', '+').replace(',', '.');
             try {
-                double v = new ExpressionBuilder(q, true).build().calculate();
-                r = String.valueOf(new Double(Math.floor(v)).intValue());
+                Object v = new ExpressionEvaluator(q, Object.class, new String[0], new Class[0]).evaluate(new Object[0]);
+                if (v instanceof Double) {
+                    r = String.valueOf(v).replace('.', ',');
+                } else {
+                    r = String.valueOf(v);
+                }
             } catch (Exception e) {
                 respondError(response, 412, ErrorMessages.BAD_QUESTION);
                 return;
