@@ -1,5 +1,6 @@
-package cs13;
+package cs13.handlers;
 
+import cs13.util.ServerRule;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.ClassRule;

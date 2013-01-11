@@ -1,5 +1,6 @@
-package cs13;
+package cs13.util;
 
+import cs13.CodeStory2013;
 import gumi.builders.UrlBuilder;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;

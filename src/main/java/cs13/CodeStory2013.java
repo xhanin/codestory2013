@@ -1,5 +1,8 @@
 package cs13;
 
+import cs13.handlers.BasicQuestionHandler;
+import cs13.handlers.MarkdownQuestionHandler;
+import cs13.handlers.ScalaskelDecomposerHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webbitserver.WebServer;

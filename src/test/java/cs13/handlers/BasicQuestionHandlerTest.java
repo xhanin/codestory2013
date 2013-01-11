@@ -1,5 +1,6 @@
-package cs13;
+package cs13.handlers;
 
+import cs13.util.ServerRule;
 import org.junit.ClassRule;
 import org.junit.Test;
 import us.monoid.web.Resty;

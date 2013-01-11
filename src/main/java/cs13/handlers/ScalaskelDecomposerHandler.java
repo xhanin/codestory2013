@@ -1,5 +1,7 @@
-package cs13;
+package cs13.handlers;
 
+import cs13.scalaskel.ScalaskelDecomposer;
+import cs13.scalaskel.ScalaskelDecomposition;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

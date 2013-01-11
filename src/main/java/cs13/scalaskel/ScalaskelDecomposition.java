@@ -1,4 +1,4 @@
-package cs13;
+package cs13.scalaskel;
 
 /**
  * User: xavierhanin

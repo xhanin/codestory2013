@@ -1,4 +1,4 @@
-package cs13;
+package cs13.scalaskel;
 
 import java.util.Collections;
 import java.util.EnumSet;
