@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webbitserver.WebServer;
 import org.webbitserver.handler.DateHeaderHandler;
+import org.webbitserver.handler.NotFoundHttpHandler;
 import org.webbitserver.handler.ServerHeaderHandler;
 import org.webbitserver.netty.NettyWebServer;
 import webbit.LoggingHandler;
@@ -26,9 +27,10 @@ public class CodeStory2013 {
                 add(new LoggingHandler());
             }
         }
-                .add(new ScalaskelDecomposerHandler())
-                .add(new MarkdownQuestionHandler())
-                .add(new BasicQuestionHandler());
+        .add("/scalaskel/change/.*", new ScalaskelDecomposerHandler())
+        .add("/enonce/.*", new MarkdownQuestionHandler())
+        .add("/", new BasicQuestionHandler())
+        .add(new NotFoundHttpHandler());
     }
 
     public void start() throws ExecutionException, InterruptedException {

@@ -11,6 +11,7 @@ import us.monoid.web.TextResource;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MarkdownQuestionHandlerTest {
@@ -25,19 +26,19 @@ public class MarkdownQuestionHandlerTest {
     }
 
     @Test
-    public void should_server_store_question_and_return_412_when_markdown_question_asked() throws IOException {
+    public void should_server_store_question_and_return_201_when_markdown_question_asked() throws IOException {
         LogbackCapturingAppender capturing = LogbackCapturingAppender.Factory
                 .weaveInto(LoggerFactory.getLogger("QUESTION"));
-        try {
-            TextResource resource = new Resty().text(
-                    server.uriBuilder()
-                            .toUri(),
-                    new Content("text/x-markdown", A_QUESTION_EXAMPLE.getBytes("UTF-8")));
-        } catch (IOException e) {
-            assertThat(
-                    capturing.getCapturedLogMessage(),
-                    containsString(A_QUESTION_EXAMPLE));
-        }
+        TextResource resource = new Resty().text(
+                server.uriBuilder()
+                        .withPath("/enonce/1")
+                        .toUri(),
+                new Content("text/x-markdown", A_QUESTION_EXAMPLE.getBytes("UTF-8")));
+
+        assertThat(resource.status(201), is(true));
+        assertThat(
+                capturing.getCapturedLogMessage(),
+                containsString(A_QUESTION_EXAMPLE));
     }
 
 }
