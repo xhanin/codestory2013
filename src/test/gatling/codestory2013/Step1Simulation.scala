@@ -21,9 +21,10 @@ class Step1Simulation extends Simulation {
 		exec(
 			http("request_1")
 				.get("/")
+				.queryParam("q", "Es tu heureux de participer(OUI/NON)")
 				.check(status.is(200)))
         }
 
-        setUp(scn.users(100).ramp(10).protocolConfig(httpConf))
+        setUp(scn.users(20).ramp(10).protocolConfig(httpConf))
 
 }
