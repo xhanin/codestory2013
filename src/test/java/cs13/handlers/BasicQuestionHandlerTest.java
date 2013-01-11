@@ -22,6 +22,7 @@ public class BasicQuestionHandlerTest {
         askBasicQuestionAndExpectAnswer("As tu bien recu le premier enonce(OUI/NON)", "OUI");
         askBasicQuestionAndExpectAnswer("Est ce que tu reponds toujours oui(OUI/NON)", "NON");
         askBasicQuestionAndExpectAnswer("1 1", "2");
+        askBasicQuestionAndExpectAnswer("2 2", "4");
     }
 
     @Test
