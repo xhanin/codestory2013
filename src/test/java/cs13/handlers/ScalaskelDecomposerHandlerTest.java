@@ -5,10 +5,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.ClassRule;
 import org.junit.Test;
-import us.monoid.json.JSONException;
-import us.monoid.web.Resty;
-
-import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -39,7 +35,7 @@ public class ScalaskelDecomposerHandlerTest {
     public static ServerRule server = new ServerRule();
 
     @Test
-    public void should_decompose_1() throws IOException, JSONException {
+    public void should_decompose_1() throws Exception {
         JsonNode json = doGetChangeAndCheckResultIsArray(1);
 
         assertThat(json.size(), is(1));
@@ -48,7 +44,7 @@ public class ScalaskelDecomposerHandlerTest {
     }
 
     @Test
-    public void should_decompose_7() throws IOException, JSONException {
+    public void should_decompose_7() throws Exception {
         JsonNode json = doGetChangeAndCheckResultIsArray(7);
 
         assertThat(json.size(), is(2));
@@ -59,17 +55,16 @@ public class ScalaskelDecomposerHandlerTest {
     }
 
     @Test
-    public void should_decompose_89() throws IOException, JSONException {
+    public void should_decompose_89() throws Exception {
         JsonNode json = doGetChangeAndCheckResultIsArray(89);
         assertThat(json.size(), is(132));
     }
 
-    private JsonNode doGetChangeAndCheckResultIsArray(int groDecimaux) throws IOException {
-        // resty json support is not able to return json array directly, only json object :(
-        String s = new Resty().text(
-                server.uriBuilder()
-                        .withPath("/scalaskel/change/" + groDecimaux)
-                        .toUri()).toString();
+    private JsonNode doGetChangeAndCheckResultIsArray(int groDecimaux) throws Exception {
+        String s = server.request("/scalaskel/change/{groDecimaux}")
+                .pathParameter("groDecimaux", groDecimaux)
+                .get(String.class)
+                .getEntity();
         JsonNode json = new ObjectMapper().readTree(s);
 
         assertThat(json, is(notNullValue()));

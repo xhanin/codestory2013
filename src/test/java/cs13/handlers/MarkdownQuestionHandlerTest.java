@@ -2,15 +2,11 @@ package cs13.handlers;
 
 import cs13.util.LogbackCapturingAppender;
 import cs13.util.ServerRule;
+import org.jboss.resteasy.client.ClientResponse;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
-import us.monoid.web.Content;
-import us.monoid.web.Resty;
-import us.monoid.web.TextResource;
-
-import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -28,16 +24,13 @@ public class MarkdownQuestionHandlerTest {
     }
 
     @Test
-    public void should_server_store_question_and_return_201_when_markdown_question_asked() throws IOException {
+    public void should_server_store_question_and_return_201_when_markdown_question_asked() throws Exception {
         LogbackCapturingAppender capturing = LogbackCapturingAppender.Factory
                 .weaveInto(LoggerFactory.getLogger("QUESTION"));
-        TextResource resource = new Resty().text(
-                server.uriBuilder()
-                        .withPath("/enonce/1")
-                        .toUri(),
-                new Content("text/x-markdown", A_QUESTION_EXAMPLE.getBytes("UTF-8")));
+        ClientResponse response = server.request("/enonce/1")
+                .body("text/x-markdown", A_QUESTION_EXAMPLE.getBytes("UTF-8")).post();
 
-        assertThat(resource.status(201), is(true));
+        assertThat(response.getResponseStatus().getStatusCode(), is(201));
         assertThat(
                 capturing.getCapturedLogMessage(),
                 containsString(A_QUESTION_EXAMPLE));

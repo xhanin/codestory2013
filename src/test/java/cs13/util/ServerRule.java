@@ -1,7 +1,7 @@
 package cs13.util;
 
 import cs13.CodeStory2013;
-import gumi.builders.UrlBuilder;
+import org.jboss.resteasy.client.ClientRequest;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -22,8 +22,11 @@ public class ServerRule implements TestRule {
         codeStory2013.stop();
     }
 
-    public UrlBuilder uriBuilder() {
-        return UrlBuilder.fromUri(codeStory2013.uri());
+    public ClientRequest request(String path) {
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        return new ClientRequest(codeStory2013.uri() + path);
     }
 
     private int findAvailablePort() throws IOException {
