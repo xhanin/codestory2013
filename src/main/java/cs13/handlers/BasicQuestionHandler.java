@@ -42,7 +42,7 @@ public class BasicQuestionHandler implements HttpHandler {
             // to get it "as provided" in the URL
             q = q.replace(' ', '+');
             try {
-                double v = new ExpressionBuilder(q).build().calculate();
+                double v = new ExpressionBuilder(q, true).build().calculate();
                 r = String.valueOf(new Double(Math.floor(v)).intValue());
             } catch (Exception e) {
                 respondError(response, 412, ErrorMessages.BAD_QUESTION);
