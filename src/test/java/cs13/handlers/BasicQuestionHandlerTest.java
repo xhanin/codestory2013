@@ -26,6 +26,7 @@ public class BasicQuestionHandlerTest {
         askBasicQuestionAndExpectAnswer("(1+2)/2", "1,5");
         askBasicQuestionAndExpectAnswer("((1+2)+3+4+(5+6+7)+(8+9+10)*3)/2*5", "272,5");
         askBasicQuestionAndExpectAnswer("1,5*4", "6");
+        askBasicQuestionAndExpectAnswer("((1,1+2)+3,14+4+(5+6+7)+(8+9+10)*4267387833344334647677634)/2*553344300034334349999000", "3,18780189e49");
     }
 
     @Test
