@@ -1,6 +1,7 @@
 package cs13;
 
 import cs13.handlers.BasicQuestionHandler;
+import cs13.handlers.JJRentalOptimizerHandler;
 import cs13.handlers.MarkdownQuestionHandler;
 import cs13.handlers.ScalaskelDecomposerHandler;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class CodeStory2013 {
                 add(new LoggingHandler());
             }
         }
+        .add("/jajascript/optimize", new JJRentalOptimizerHandler())
         .add("/scalaskel/change/.*", new ScalaskelDecomposerHandler())
         .add("/enonce/.*", new MarkdownQuestionHandler())
         .add("/", new BasicQuestionHandler())
