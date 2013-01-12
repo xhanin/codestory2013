@@ -21,11 +21,11 @@ public class BasicQuestionHandlerTest {
         askBasicQuestionAndExpectAnswer("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)", "OUI");
         askBasicQuestionAndExpectAnswer("As tu bien recu le premier enonce(OUI/NON)", "OUI");
         askBasicQuestionAndExpectAnswer("Est ce que tu reponds toujours oui(OUI/NON)", "NON");
-        askBasicQuestionAndExpectAnswer("1 1", "2");
-        askBasicQuestionAndExpectAnswer("2 2", "4");
-        askBasicQuestionAndExpectAnswer("(1 2)/2", "1,5");
-        askBasicQuestionAndExpectAnswer("((1+2)+3+4+(5+6+7)+(8+9+10)*3)/2*5", "270");
-        askBasicQuestionAndExpectAnswer("1,5*4", "6,0");
+        askBasicQuestionAndExpectAnswer("1+1", "2");
+        askBasicQuestionAndExpectAnswer("2+2", "4");
+        askBasicQuestionAndExpectAnswer("(1+2)/2", "1,5");
+        askBasicQuestionAndExpectAnswer("((1+2)+3+4+(5+6+7)+(8+9+10)*3)/2*5", "272,5");
+        askBasicQuestionAndExpectAnswer("1,5*4", "6");
     }
 
     @Test

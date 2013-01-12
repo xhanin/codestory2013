@@ -1,7 +1,7 @@
 package cs13.handlers;
 
 import com.google.common.collect.ImmutableMap;
-import org.codehaus.janino.ExpressionEvaluator;
+import de.congrace.exp4j.ExpressionBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webbitserver.HttpControl;
@@ -26,7 +26,6 @@ public class BasicQuestionHandler implements HttpHandler {
             .put("Est ce que tu reponds toujours oui(OUI/NON)", "NON")
             .put("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)", "OUI")
             .put("As tu bien recu le premier enonce(OUI/NON)", "OUI")
-            .put("(1 2)/2", "1,5")
             .build();
 
     public void handleHttpRequest(HttpRequest request, HttpResponse response, HttpControl httpControl) throws Exception {
@@ -43,12 +42,8 @@ public class BasicQuestionHandler implements HttpHandler {
             // And we want point as decimal separator...
             q = q.replace(' ', '+').replace(',', '.');
             try {
-                Object v = new ExpressionEvaluator(q, Object.class, new String[0], new Class[0]).evaluate(new Object[0]);
-                if (v instanceof Double) {
-                    r = String.valueOf(v).replace('.', ',');
-                } else {
-                    r = String.valueOf(v);
-                }
+                double v = new ExpressionBuilder(q).build().calculate();
+                r = isInt(v) ? String.valueOf(new Double(v).intValue()) : String.valueOf(v).replace('.',',');
             } catch (Exception e) {
                 respondError(response, 412, ErrorMessages.BAD_QUESTION);
                 return;
@@ -56,6 +51,10 @@ public class BasicQuestionHandler implements HttpHandler {
         }
         logger.info("{} => {}", q, r);
         response.content(r).end();
+    }
+
+    private boolean isInt(double v) {
+        return (v == Math.floor(v)) && !Double.isInfinite(v);
     }
 
     private HttpResponse respondError(HttpResponse response, int status, String r) {
