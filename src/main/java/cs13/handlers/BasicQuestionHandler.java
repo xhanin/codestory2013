@@ -1,7 +1,7 @@
 package cs13.handlers;
 
 import com.google.common.collect.ImmutableMap;
-import de.congrace.exp4j.ExpressionBuilder;
+import groovy.util.Eval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webbitserver.HttpControl;
@@ -10,6 +10,7 @@ import org.webbitserver.HttpRequest;
 import org.webbitserver.HttpResponse;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class BasicQuestionHandler implements HttpHandler {
     public static final class ErrorMessages {
@@ -26,7 +27,6 @@ public class BasicQuestionHandler implements HttpHandler {
             .put("Est ce que tu reponds toujours oui(OUI/NON)", "NON")
             .put("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)", "OUI")
             .put("As tu bien recu le premier enonce(OUI/NON)", "OUI")
-            .put("((1,1 2) 3,14 4 (5 6 7) (8 9 10)*4267387833344334647677634)/2*553344300034334349999000", "3,18780189e49")
             .build();
 
     public void handleHttpRequest(HttpRequest request, HttpResponse response, HttpControl httpControl) throws Exception {
@@ -43,8 +43,10 @@ public class BasicQuestionHandler implements HttpHandler {
             // And we want point as decimal separator...
             q = q.replace(' ', '+').replace(',', '.');
             try {
-                double v = new ExpressionBuilder(q).build().calculate();
-                r = isInt(v) ? String.valueOf(new Double(v).intValue()) : String.valueOf(v).replace('.',',');
+                r = String.valueOf(Eval.me(q)).replace('.', ',');
+                if (Pattern.compile("\\d+,0+").matcher(r).matches()) {
+                    r = r.substring(0, r.indexOf(','));
+                }
             } catch (Exception e) {
                 respondError(response, 412, ErrorMessages.BAD_QUESTION);
                 return;
