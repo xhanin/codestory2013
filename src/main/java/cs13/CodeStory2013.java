@@ -1,9 +1,6 @@
 package cs13;
 
-import cs13.handlers.BasicQuestionHandler;
-import cs13.handlers.JJRentalOptimizerHandler;
-import cs13.handlers.MarkdownQuestionHandler;
-import cs13.handlers.ScalaskelDecomposerHandler;
+import cs13.handlers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webbitserver.WebServer;
@@ -35,6 +32,7 @@ public class CodeStory2013 {
         .add("/scalaskel/change/.*", new ScalaskelDecomposerHandler())
         .add("/enonce/.*", new MarkdownQuestionHandler())
         .add("/", new BasicQuestionHandler())
+        .add(new AnyPostHandler())
         .add(new NotFoundHttpHandler());
     }
 
