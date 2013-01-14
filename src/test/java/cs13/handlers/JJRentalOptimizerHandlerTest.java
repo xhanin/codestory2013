@@ -26,7 +26,7 @@ public class JJRentalOptimizerHandlerTest {
                         "                { \"VOL\": \"YAGNI17\", \"DEPART\": 5, \"DUREE\": 9, \"PRIX\": 7 }\n" +
                         "]").getBytes("UTF-8")).post(String.class);
 
-        assertThat(response.getResponseStatus().getStatusCode(), is(200));
+        assertThat(response.getResponseStatus().getStatusCode(), is(201));
 
         JsonNode json = new ObjectMapper().readTree(response.getEntity());
         assertThat(json, is(notNullValue()));
