@@ -29,6 +29,7 @@ public class BasicQuestionHandler implements HttpHandler {
             .put("As tu bien recu le premier enonce(OUI/NON)", "OUI")
             .put("As tu passe une bonne nuit malgre les bugs de l etape precedente(PAS_TOP/BOF/QUELS_BUGS)", "PAS_TOP")
             .put("As tu bien recu le second enonce(OUI/NON)", "OUI")
+            .put("As tu copie le code de ndeloof(OUI/NON/JE_SUIS_NICOLAS)", "NON")
             .build();
 
     public void handleHttpRequest(HttpRequest request, HttpResponse response, HttpControl httpControl) throws Exception {
