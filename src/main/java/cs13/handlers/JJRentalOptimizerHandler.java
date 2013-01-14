@@ -38,7 +38,7 @@ public class JJRentalOptimizerHandler implements HttpHandler {
 
         String json = new ObjectMapper().writeValueAsString(optimization);
         logger.info("{} => {}", q, json);
-        response.status(201).content(json).end();
+        response.status(201).header("Content-Type", "application/json").content(json).end();
 
     }
 }
