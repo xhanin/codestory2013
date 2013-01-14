@@ -71,6 +71,11 @@
         <id>maven2.gueck.com-releases</id>
         <url>http://maven2.gueck.com/releases</url>
       </repository>
+      <repository>
+          <id>thirdparty-releases</id>
+          <name>JBoss Thirdparty Releases</name>
+          <url>http://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+      </repository>
     </repositories>
 
 
