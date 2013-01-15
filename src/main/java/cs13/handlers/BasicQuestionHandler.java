@@ -20,7 +20,7 @@ public class BasicQuestionHandler implements HttpHandler {
 
     private final Logger logger = LoggerFactory.getLogger("QUESTION");
 
-    private static final Map<String, String> BASIC_QUESTIONS = new ImmutableMap.Builder<String, String>()
+    private static final Map<String, String> BASIC_QUESTIONS = ImmutableMap.<String, String>builder()
             .put("Quelle est ton adresse email", "xavier.hanin@gmail.com")
             .put("Es tu abonne a la mailing list(OUI/NON)", "OUI")
             .put("Es tu heureux de participer(OUI/NON)", "OUI")
@@ -43,7 +43,7 @@ public class BasicQuestionHandler implements HttpHandler {
         if (r == null) {
             // let's see if it's an expression
             // but first it seems it was not url encoded, so + get converted to spaces.
-            // And we want point as decimal separator...
+            // And we want dot as decimal separator...
             q = q.replace(' ', '+').replace(',', '.');
             try {
                 r = String.valueOf(Eval.me(q)).replace('.', ',');
@@ -57,10 +57,6 @@ public class BasicQuestionHandler implements HttpHandler {
         }
         logger.info("{} => {}", q, r);
         response.content(r).end();
-    }
-
-    private boolean isInt(double v) {
-        return (v == Math.floor(v)) && !Double.isInfinite(v);
     }
 
     private HttpResponse respondError(HttpResponse response, int status, String r) {

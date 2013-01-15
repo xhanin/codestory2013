@@ -1,5 +1,7 @@
 package cs13.scalaskel;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 public class ScalaskelDecomposer {
     public Set<ScalaskelDecomposition> decompose(int groDecimaux) {
+        Preconditions.checkArgument(groDecimaux >= 0, "groDecimaux must be positive: %s", groDecimaux);
         return decompose(groDecimaux, EnumSet.allOf(ScalaskelDecomposition.Coin.class));
     }
 

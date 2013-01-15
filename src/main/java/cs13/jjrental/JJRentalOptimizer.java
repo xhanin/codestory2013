@@ -1,9 +1,10 @@
 package cs13.jjrental;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,15 +14,14 @@ import java.util.List;
  */
 public class JJRentalOptimizer {
     public JJOptimization optimize(Collection<TripOrder> tripOrders) {
+        Preconditions.checkNotNull(tripOrders);
         if (tripOrders.size() <= 1) {
             return new JJOptimization(Lists.newArrayList(tripOrders));
         }
 
-        List<TripOrder> orders = Lists.newArrayList(tripOrders);
-        Collections.sort(orders);
-        List<TripOrderEdge> edges = Lists.newArrayListWithCapacity(orders.size());
-        for (int i = 0; i < orders.size(); i++) {
-            edges.add(new TripOrderEdge(orders.get(i), getPredecessors(orders.get(i), edges)));
+        List<TripOrderEdge> edges = Lists.newArrayListWithCapacity(tripOrders.size());
+        for (TripOrder order : Ordering.natural().sortedCopy(tripOrders)) {
+            edges.add(new TripOrderEdge(order, getPredecessors(order, edges)));
         }
 
         TripOrderEdge best = doOptimize(edges);
@@ -52,8 +52,7 @@ public class JJRentalOptimizer {
 
     private TripOrderEdge doOptimize(List<TripOrderEdge> orders) {
         TripOrderEdge best = null;
-        for (int i = orders.size() - 1; i >= 0; i--) {
-            TripOrderEdge order = orders.get(i);
+        for (TripOrderEdge order : Lists.reverse(orders)) {
             doOptimize(order);
 
             if (best == null || order.getGain() > best.getGain()) {

@@ -12,7 +12,7 @@ import java.util.List;
  * Date: 1/12/13
  * Time: 1:53 PM
  */
-public class JJOptimization implements Comparable<JJOptimization> {
+public class JJOptimization {
     private final long gain;
     @JsonIgnore
     private final List<TripOrder> ordersPath;
@@ -56,8 +56,4 @@ public class JJOptimization implements Comparable<JJOptimization> {
                 '}';
     }
 
-    @Override
-    public int compareTo(JJOptimization o) {
-        return Long.compare(getGain(), o.getGain());
-    }
 }

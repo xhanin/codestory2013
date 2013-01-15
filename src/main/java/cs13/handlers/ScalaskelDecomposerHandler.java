@@ -18,11 +18,6 @@ public class ScalaskelDecomposerHandler implements HttpHandler {
     private ScalaskelDecomposer decomposer = new ScalaskelDecomposer();
 
     public void handleHttpRequest(HttpRequest request, HttpResponse response, HttpControl httpControl) throws Exception {
-        if (!request.uri().startsWith("/scalaskel/change/")) {
-            httpControl.nextHandler(request, response, httpControl);
-            return;
-        }
-
         int n = Integer.parseInt(request.uri().substring("/scalaskel/change/".length()));
         Set<ScalaskelDecomposition> decompositions = decomposer.decompose(n);
 
