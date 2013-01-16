@@ -52,7 +52,7 @@ public class JJRentalOptimizer {
 
     private TripOrderEdge doOptimize(List<TripOrderEdge> orders) {
         TripOrderEdge best = null;
-        for (TripOrderEdge order : Lists.reverse(orders)) {
+        for (TripOrderEdge order : orders) {
             doOptimize(order);
 
             if (best == null || order.getGain() > best.getGain()) {
@@ -63,19 +63,12 @@ public class JJRentalOptimizer {
     }
 
     private void doOptimize(TripOrderEdge order) {
-        if (order.getGain() > 0) {
-            // edge already optimized
-            return;
-        }
-
         if (order.getPredecessors().isEmpty()) {
             order.setGain(order.getOrder().getCost());
             return;
         }
 
         for (TripOrderEdge predecessor : order.getPredecessors()) {
-            doOptimize(predecessor);
-
             long potentialGain = predecessor.getGain() + order.getOrder().getCost();
             if (potentialGain > order.getGain()) {
                 order.setGain(potentialGain);
