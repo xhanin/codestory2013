@@ -34,7 +34,9 @@ public class JJRentalOptimizerHandler implements HttpHandler {
 
         List<TripOrder> orders = new ObjectMapper().readValue(q, new TypeReference<List<TripOrder>>() { });
 
+        long start = System.currentTimeMillis();
         JJOptimization optimization = optimizer.optimize(orders);
+        logger.info("optimized {} orders in {} ms", orders.size(), System.currentTimeMillis() - start);
 
         String json = new ObjectMapper().writeValueAsString(optimization);
         logger.info("{} => {}", q, json);
