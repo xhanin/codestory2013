@@ -14,7 +14,10 @@ import org.webbitserver.HttpHandler;
 import org.webbitserver.HttpRequest;
 import org.webbitserver.HttpResponse;
 
+import java.io.InputStream;
 import java.util.List;
+
+import static cs13.handlers.WebbitHelper.getBodyAsStream;
 
 /**
  * User: xavierhanin
@@ -32,21 +35,23 @@ public class JJRentalOptimizerHandler implements HttpHandler {
             return;
         }
 
-        String q = request.body();
+        InputStream qStream = getBodyAsStream(request);
 
         try {
-            List<TripOrder> orders = new ObjectMapper().readValue(q, new TypeReference<List<TripOrder>>() { });
+            List<TripOrder> orders = new ObjectMapper().readValue(qStream, new TypeReference<List<TripOrder>>() { });
 
             long start = System.currentTimeMillis();
             JJOptimization optimization = optimizer.optimize(orders);
             logger.info("optimized {} orders in {} ms", orders.size(), System.currentTimeMillis() - start);
 
             String json = new ObjectMapper().writeValueAsString(optimization);
-            logger.info("{} => {}", q, json);
+            logger.info("{} => {}", orders, json);
             response.status(201).header("Content-Type", "application/json").content(json).end();
         } catch (JsonParseException e) {
+            logger.info("malformed json: {}", e.getMessage());
             response.status(400).content("malformed json: " + e.getMessage()).end();
         } catch (JsonMappingException e) {
+            logger.info("invalid json: {}", e.getMessage());
             response.status(400).content("invalid json: " + e.getMessage()).end();
         }
 
