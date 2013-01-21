@@ -1,6 +1,5 @@
 package cs13.handlers;
 
-import com.google.common.io.CharStreams;
 import cs13.jjrental.JJOptimization;
 import cs13.jjrental.JJRentalOptimizer;
 import cs13.jjrental.TripOrder;
@@ -16,7 +15,6 @@ import org.webbitserver.HttpRequest;
 import org.webbitserver.HttpResponse;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import static cs13.handlers.WebbitHelper.getBodyAsStream;
@@ -40,11 +38,9 @@ public class JJRentalOptimizerHandler implements HttpHandler {
 
         InputStream qStream = getBodyAsStream(request);
         logger.info("optimization request streamed...");
-        String qJson = CharStreams.toString(new InputStreamReader(qStream));
-        logger.info("optimization request stringed, length is {}", qJson.length());
 
         try {
-            List<TripOrder> orders = new ObjectMapper().readValue(qJson, new TypeReference<List<TripOrder>>() { });
+            List<TripOrder> orders = new ObjectMapper().readValue(qStream, new TypeReference<List<TripOrder>>() { });
             logger.info("optimization request mapped, nb orders is {}", orders.size());
 
             long start = System.currentTimeMillis();
@@ -55,10 +51,10 @@ public class JJRentalOptimizerHandler implements HttpHandler {
             logger.info("{} => {}", orders.size() > 100 ? orders.subList(0, 100) + " [...]" : orders, json);
             response.status(201).header("Content-Type", "application/json").content(json).end();
         } catch (JsonParseException e) {
-            logger.info("malformed json: {} <= {} chars\n{}", new Object[] {e.getMessage(), qJson.length(), qJson});
+            logger.info("malformed json: {}", e.getMessage());
             response.status(400).content("malformed json: " + e.getMessage()).end();
         } catch (JsonMappingException e) {
-            logger.info("invalid json: {} <=\n{}", e.getMessage(), qJson);
+            logger.info("invalid json: {}", e.getMessage());
             response.status(400).content("invalid json: " + e.getMessage()).end();
         }
 

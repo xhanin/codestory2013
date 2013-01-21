@@ -2,9 +2,9 @@ package cs13.jjrental;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,8 +19,10 @@ public class JJRentalOptimizer {
             return new JJOptimization(Lists.newArrayList(tripOrders));
         }
 
+        List<TripOrder> sortedOrders = Lists.newArrayList(tripOrders);
+        Collections.sort(sortedOrders);
         List<TripOrderEdge> edges = Lists.newArrayListWithCapacity(tripOrders.size());
-        for (TripOrder order : Ordering.natural().sortedCopy(tripOrders)) {
+        for (TripOrder order : sortedOrders) {
             edges.add(new TripOrderEdge(order, getPredecessors(order, edges)));
         }
 
