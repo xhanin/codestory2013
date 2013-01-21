@@ -15,6 +15,8 @@ import java.util.concurrent.ExecutionException;
 
 public class CodeStory2013 {
 
+    public static final int KILO = 1024;
+    public static final int MEGA = 1024 * KILO;
     private final WebServer webServer;
 
     private final Logger logger = LoggerFactory.getLogger("MAIN");
@@ -28,6 +30,7 @@ public class CodeStory2013 {
                 add(new LoggingHandler());
             }
         }
+        .maxContentLength(20 * MEGA)
         .add("/jajascript/optimize", new JJRentalOptimizerHandler())
         .add("/scalaskel/change/.*", new ScalaskelDecomposerHandler())
         .add("/enonce/.*", new MarkdownQuestionHandler())

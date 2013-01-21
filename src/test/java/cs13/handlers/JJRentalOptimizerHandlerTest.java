@@ -83,6 +83,18 @@ public class JJRentalOptimizerHandlerTest {
             , 109);
     }
 
+    @Test
+    public void should_server_return_optimization_when_asked_50000_orders() throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i<50000; i++) {
+            sb.append("{\"VOL\":\"shallow-kidnapper-"+i+"\",\"DEPART\":0,\"DUREE\":4,\"PRIX\":10},");
+        }
+        sb.append("{\"VOL\":\"shallow-kidnapper-999999\",\"DEPART\":0,\"DUREE\":4,\"PRIX\":10}");
+        sb.append("]");
+        should_server_return_optimization_when_asked(sb.toString(), 10);
+    }
+
     public void should_server_return_optimization_when_asked(String request, int expectedGain) throws Exception {
         ClientResponse<String> response = server.request("/jajascript/optimize")
                 .body("application/json", request.getBytes("UTF-8")).post(String.class);
