@@ -7,6 +7,8 @@ import org.jboss.resteasy.client.ClientResponse;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -85,14 +87,19 @@ public class JJRentalOptimizerHandlerTest {
 
     @Test
     public void should_server_return_optimization_when_asked_50000_orders() throws Exception {
+        Random r = new Random();
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i<50000; i++) {
-            sb.append("{\"VOL\":\"shallow-kidnapper-"+i+"\",\"DEPART\":0,\"DUREE\":4,\"PRIX\":10},");
+            sb.append("{\"VOL\":\"shallow-kidnapper-"+i+"\",\"DEPART\":" + r.nextInt(24)+ ",\"DUREE\":" + r.nextInt(10) + ",\"PRIX\":" + r.nextInt(15) + "},");
         }
         sb.append("{\"VOL\":\"shallow-kidnapper-999999\",\"DEPART\":0,\"DUREE\":4,\"PRIX\":10}");
         sb.append("]");
-        should_server_return_optimization_when_asked(sb.toString(), 10);
+
+        ClientResponse<String> response = server.request("/jajascript/optimize")
+                .body("application/json", sb.toString().getBytes("UTF-8")).post(String.class);
+
+        assertThat(response.getResponseStatus().getStatusCode(), is(201));
     }
 
     public void should_server_return_optimization_when_asked(String request, int expectedGain) throws Exception {
