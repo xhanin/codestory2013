@@ -48,7 +48,11 @@ public class JJRentalOptimizerHandler implements HttpHandler {
             logger.info("optimized {} orders in {} ms", orders.size(), System.currentTimeMillis() - start);
 
             String json = new ObjectMapper().writeValueAsString(optimization);
-            logger.info("{} => {}", orders.size() > 100 ? orders.subList(0, 100) + " [...]" : orders, json);
+            logger.info("{} => {}",
+                    (orders.size() > 100 ? String.format("%s orders", orders.size()) : String.valueOf(orders)),
+                    (optimization.getPath().size() > 10 ?
+                            String.format("gain: %s ; path length: %s", optimization.getGain(), optimization.getPath().size())
+                            : json));
             response.status(201).header("Content-Type", "application/json").content(json).end();
         } catch (JsonParseException e) {
             logger.info("malformed json: {}", e.getMessage());
