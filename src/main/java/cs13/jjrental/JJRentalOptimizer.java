@@ -1,7 +1,6 @@
 package cs13.jjrental;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;
@@ -27,7 +26,7 @@ public class JJRentalOptimizer {
             edges.add(new TripOrderEdge(order));
         }
 
-        TripOrderEdge best = doOptimize(ImmutableList.copyOf(edges));
+        TripOrderEdge best = doOptimize(edges);
 
         return new JJOptimization(buildPath(best));
     }
@@ -42,30 +41,27 @@ public class JJRentalOptimizer {
         return path;
     }
 
-    private TripOrderEdge doOptimize(ImmutableList<TripOrderEdge> orders) {
+    private TripOrderEdge doOptimize(List<TripOrderEdge> edges) {
         TripOrderEdge best = null;
-        for (int i = 0; i < orders.size(); i++) {
-            TripOrderEdge order = orders.get(i);
-            doOptimize(order, orders.subList(0, i));
+        TripOrderEdge[] bestsByEndHour = new TripOrderEdge[edges.get(edges.size() - 1).getOrder().getEndHour() + 1];
+        for (TripOrderEdge edge : edges) {
+            TripOrder order = edge.getOrder();
+            for (int i = order.getStartHour(); i>=0 && edge.getGain() == -1; i--) {
+                if (bestsByEndHour[i] != null) {
+                    edge.setPredecessor(bestsByEndHour[i]);
+                    edge.setGain(order.getCost() + edge.getPredecessor().getGain());
+                }
+            }
 
-            if (best == null || order.getGain() > best.getGain()) {
-                best = order;
+            if (edge.getGain() == -1) {
+                edge.setGain(order.getCost());
+            }
+
+            if (best == null || edge.getGain() > best.getGain()) {
+                best = edge;
+                bestsByEndHour[order.getEndHour()] = edge;
             }
         }
         return best;
-    }
-
-    private void doOptimize(TripOrderEdge order, List<TripOrderEdge> edges) {
-        order.setGain(order.getOrder().getCost());
-        for (int i = edges.size() - 1; i >= 0; i--) {
-            TripOrderEdge edge = edges.get(i);
-            if (edge.getOrder().isCompatibleWith(order.getOrder())) {
-                long potentialGain = edge.getGain() + order.getOrder().getCost();
-                if (potentialGain > order.getGain()) {
-                    order.setGain(potentialGain);
-                    order.setPredecessor(edge);
-                }
-            }
-        }
     }
 }

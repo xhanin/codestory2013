@@ -33,7 +33,7 @@ public final class TripOrder implements Comparable<TripOrder> {
 
     public boolean isCompatibleWith(TripOrder order) {
         // we compare only to later orders
-        return order.getStartHour() >= getStartHour() + getDuration();
+        return order.getStartHour() >= getEndHour();
     }
 
     public void setName(String name) {
@@ -58,6 +58,10 @@ public final class TripOrder implements Comparable<TripOrder> {
 
     public int getStartHour() {
         return startHour;
+    }
+
+    public int getEndHour() {
+        return startHour + duration;
     }
 
     public int getDuration() {
@@ -104,6 +108,6 @@ public final class TripOrder implements Comparable<TripOrder> {
 
     @Override
     public int compareTo(TripOrder o) {
-        return Integer.compare(getStartHour(), o.getStartHour());
+        return Integer.compare(getEndHour(), o.getEndHour());
     }
 }

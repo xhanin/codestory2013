@@ -8,7 +8,7 @@ package cs13.jjrental;
 public final class TripOrderEdge implements Comparable<TripOrderEdge> {
     private final TripOrder order;
 
-    private long gain;
+    private long gain = -1;
     private TripOrderEdge predecessor;
 
     public TripOrderEdge(TripOrder order) {

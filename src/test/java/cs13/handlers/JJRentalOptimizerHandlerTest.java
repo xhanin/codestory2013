@@ -59,8 +59,8 @@ public class JJRentalOptimizerHandlerTest {
         assertThat(json.get("path").isArray(), is(true));
         assertThat(json.get("path").size(), is(12));
         assertThat(json.get("path").get(0).asText(), is("fine-purple-84"));
-        // assertThat(json.get("path").get(1).asText(), is("hilarious-leprechaun-30")); // this is the other option, current algo find other one
-        assertThat(json.get("path").get(1).asText(), is("skinny-superman-4"));
+        assertThat(json.get("path").get(1).asText(), is("hilarious-leprechaun-30"));
+        // assertThat(json.get("path").get(1).asText(), is("skinny-superman-4")); // this is the other option, current algo find other one
         assertThat(json.get("path").get(11).asText(), is("careful-hatchback-74"));
     }
 
