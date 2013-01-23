@@ -17,17 +17,9 @@ public class JJOptimization {
     @JsonIgnore
     private final List<TripOrder> ordersPath;
 
-    public JJOptimization(List<TripOrder> ordersPath) {
+    public JJOptimization(long gain, List<TripOrder> ordersPath) {
+        this.gain = gain;
         this.ordersPath = ordersPath;
-        this.gain = computeCost();
-    }
-
-    private long computeCost() {
-        long cost = 0;
-        for (TripOrder tripOrder : ordersPath) {
-            cost += tripOrder.getCost();
-        }
-        return cost;
     }
 
     public long getGain() {

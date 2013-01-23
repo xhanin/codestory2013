@@ -1,18 +1,25 @@
 package cs13.jjrental;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
  * User: xavierhanin
  * Date: 1/15/13
  * Time: 4:44 PM
  */
-public final class TripOrderEdge implements Comparable<TripOrderEdge> {
+public final class TripOrderEdge {
     private final TripOrder order;
 
-    private long gain = -1;
-    private TripOrderEdge predecessor;
+    private final long gain;
+    private final Optional<TripOrderEdge> predecessor;
 
-    public TripOrderEdge(TripOrder order) {
+    public TripOrderEdge(TripOrder order, Optional<TripOrderEdge> predecessor, long gain) {
         this.order = order;
+        this.gain = gain;
+        this.predecessor = predecessor;
     }
 
     public TripOrder getOrder() {
@@ -23,20 +30,18 @@ public final class TripOrderEdge implements Comparable<TripOrderEdge> {
         return gain;
     }
 
-    public void setGain(long gain) {
-        this.gain = gain;
-    }
-
-    public TripOrderEdge getPredecessor() {
+    public Optional<TripOrderEdge> getPredecessor() {
         return predecessor;
     }
 
-    public void setPredecessor(TripOrderEdge predecessor) {
-        this.predecessor = predecessor;
+    public List<TripOrder> buildPath() {
+        List<TripOrder> path = Lists.newLinkedList();
+
+        for (Optional<TripOrderEdge> current = Optional.of(this); current.isPresent(); current = current.get().getPredecessor()) {
+            path.add(0, current.get().getOrder());
+        }
+
+        return path;
     }
 
-    @Override
-    public int compareTo(TripOrderEdge o) {
-        return order.compareTo(o.getOrder());
-    }
 }
