@@ -431,5 +431,5 @@ Bref, je me suis bien amusé avec cette épreuve qui m'a permis de marquer des p
 Pour la prochaine étape je cherche un binome Java (et JS si il faut faire du front), et puisqu'on partage le même ordi je suis plutôt MacOS / Intellij / QWERTY, je fais moins de code depuis que je m'occupe de l'agence de Bordeaux de 4SH mais j'ai quelques restes avec mes 15 ans de Java.
 
 
-## LFO PR 
+## Laurent Foret
 J'ai pas tout compris le tweet de @fcamblor mais si il faut une Pull Request je le fais.
